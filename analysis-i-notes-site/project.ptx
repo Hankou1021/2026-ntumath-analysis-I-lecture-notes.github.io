@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project ptx-version="2">
+  <targets>
+    <!-- The website (published to GitHub Pages) -->
+    <target name="web" format="html"/>
+    <!-- A PDF of the whole notes, linked from the website -->
+    <target name="print" format="pdf">
+      <!-- PreTeXt's LaTeX has no built-in CJK setup; add it (and mathrsfs for \mathscr) here -->
+      <stringparams latex.preamble.late="\usepackage{xeCJK}\setCJKmainfont{Noto Serif CJK TC}\usepackage{mathrsfs}"/>
+    </target>
+  </targets>
+</project>
