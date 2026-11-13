@@ -1,0 +1,60 @@
+name: Build and deploy notes
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install TeX (for the PDF and the TikZ figures)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            texlive-xetex texlive-latex-extra texlive-pictures \
+            texlive-lang-chinese texlive-lang-cjk \
+            fonts-lmodern fonts-noto-cjk
+
+      - name: Install PreTeXt
+        run: pip install -r requirements.txt
+
+      - name: Build website
+        run: pretext build web
+
+      - name: Build PDF
+        run: pretext build print
+
+      - name: Put the PDF on the website
+        run: cp output/print/main.pdf output/web/analysis-i-notes.pdf
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: output/web
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
