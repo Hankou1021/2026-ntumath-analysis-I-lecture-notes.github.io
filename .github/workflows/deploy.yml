@@ -28,7 +28,7 @@ jobs:
       - name: Install TeX (for the PDF and the TikZ figures)
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends \
+          sudo apt-get install -y \
             texlive-xetex texlive-latex-extra texlive-pictures \
             texlive-lang-chinese texlive-lang-cjk \
             fonts-lmodern fonts-noto-cjk
@@ -39,11 +39,18 @@ jobs:
       - name: Build website
         run: pretext build web
 
+      # If the PDF fails, still publish the website (the error stays visible in this step's log)
       - name: Build PDF
+        continue-on-error: true
         run: pretext build print
 
       - name: Put the PDF on the website
-        run: cp output/print/main.pdf output/web/analysis-i-notes.pdf
+        run: |
+          if [ -f output/print/main.pdf ]; then
+            cp output/print/main.pdf output/web/analysis-i-notes.pdf
+          else
+            echo "::warning::PDF was not built; publishing the website without it."
+          fi
 
       - uses: actions/upload-pages-artifact@v3
         with:
