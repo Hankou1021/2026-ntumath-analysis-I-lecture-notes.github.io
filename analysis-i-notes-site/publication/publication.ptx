@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<publication>
-  <!-- number theorems, definitions, etc. within sections (like \newtheorem{df}{Definition}[section]) -->
-  <numbering>
-    <blocks level="1"/>
-  </numbering>
-</publication>
