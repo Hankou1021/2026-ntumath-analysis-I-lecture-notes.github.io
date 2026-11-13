@@ -1,0 +1,8 @@
+# PreTeXt build output and caches (rebuilt by GitHub Actions)
+output/
+logs/
+.cache/
+generated-assets/
+source/generated/
+__pycache__/
+.venv/
