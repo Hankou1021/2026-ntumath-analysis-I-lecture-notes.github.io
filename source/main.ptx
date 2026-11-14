@@ -165,7 +165,7 @@ The derivative of this distribution can be found using the Gauss-Green theorem:
         = -1_\Omega\left(\frac{\pr \phi}{\pr x_j}\right)
         = -\int_{\Omega}\frac{\pr \phi}{\pr x_j}\,dx
         = \int_{\pr\Omega} \phi N_j \,dS,</md>
-where <m>N=(N_1,N_2)</m> is the normal vector pointing outward.
+where <m>N=(N_1,\ldots, N_n)</m> is the normal vector pointing outward.
 Hence, <m>\frac{\pr 1_\Omega}{\pr x_j}=N_j\,dS</m>.</p>
 <p>Distribution theory is the foundation of modern analysis, including but not limited to functional analysis, harmonic analysis, and partial differential equations (PDE).
 A common theme in the research of PDE is to find the distributional solutions to an equation first and then study the smoothness (regularity) of such solutions.</p>
@@ -2035,7 +2035,7 @@ which is small for <m>\ell</m> large.</p>
 <title>Test Functions and Basic Properties of Distributions</title>
 <subsection xml:id="ssec-1022">
 <title>20261022</title>
-<p>We will use the notations <m>\N_0\coloneqq \N\cup\set{0}</m> and <m>\overline\N_0 \coloneqq \N_0\cup\set{+\infty}</m>.
+<p>We will use the notations <m>\N\coloneqq\Z_{&gt;0}</m>, <m>\N_0\coloneqq \N\cup\set{0}</m> and <m>\overline\N_0 \coloneqq \N_0\cup\set{+\infty}</m>.
 Let <m>X\subset \R^n</m> be an open set.
 For every <m>k\in\overline\N_0</m>, let <m>C^k(X)</m> be the space of <m>k</m>-times continuously differentiable functions.
 For any multi-index <m>\alpha=(\alpha_1,\dots,\alpha_n)\in \N_0^n</m>, let <m>\abs{\alpha}=\alpha_1+\dots+\alpha_n</m> and
@@ -2214,7 +2214,7 @@ If <m>\phi\ge0</m>, then each <m>\phi_j\ge0</m>.</p>
 <md>\abs{u(\phi)}
         \le C\sum_{\abs{\alpha}\le k} \sup_{\R^n} \abs{\pr_x^\alpha \phi}</md>
 for all <m>\phi\in C_c^\infty(X)</m> with <m>\operatorname{supp}\phi\subset K</m>.
-Note that <m>C</m> and <m>k</m> depend on <m>K</m>.
+Note that <m>C</m> and <m>k</m> depend only on <m>K</m>.
 The space of all distributions is denoted by <m>\mathcal D'(X)</m>.</p>
 </statement>
 </definition>
@@ -2240,6 +2240,420 @@ The <em>Dirac distribution</em> <m>\delta_p\in\mathcal D'(X)</m> is defined by
 It is clearly linear, and <m>\abs{\delta_p(\phi)}=\abs{\phi(p)}\le\sup_{\R^n}\abs\phi</m> for all <m>\phi\in C_c^\infty(X)</m>, so <m>\delta_p</m> is a distribution with <m>C=1</m> and <m>k=0</m> for every <m>K\Subset X</m>.
 This is important in the theory of PDE.</p>
 </example>
+</subsection>
+<subsection xml:id="ssec-1110">
+<title>20261110</title>
+<theorem xml:id="thm-smooth-dependence">
+<statement>
+<p>Let <m>\phi\in C_c^\infty(X\times Y)</m>, where <m>X\subset \R^n</m> and <m>Y\subset\R^m</m> are open sets.
+Let <m>u\in \mathcal D'(X)</m>.
+Then the function <m>y\in Y\mapsto u(\phi(\cdot,y))</m> is a smooth function in <m>Y</m>, and
+<md>\pr_y^\alpha\, u(\phi(\cdot,y)) = u(\pr_y^\alpha\phi(\cdot,y))</md>
+for all <m>\alpha\in \N_0^m</m>.</p>
+</statement>
+<proof>
+<p>The projection <m>K</m> of <m>\operatorname{supp}\phi</m> to <m>X</m> is compact, and <m>\operatorname{supp}\phi(\cdot,y)\subset K</m> for all <m>y</m>; the same holds for every <m>\pr_y^\alpha\phi</m>.
+Fix <m>y</m> and small <m>h\in\R^m</m>.
+By Taylor's formula,
+<md>\phi(x,y+h)=\phi(x,y)+\sum_{j=1}^{m}h_j\frac{\pr\phi}{\pr y_j}(x,y)+\Psi(x,y,h),\quad
+        \Psi=\sum_{i,j=1}^{m}h_ih_j\int_0^1(1-t)\frac{\pr^2\phi}{\pr y_i\pr y_j}(x,y+th)\,dt,</md>
+and <m>\operatorname{supp}\Psi(\cdot,y,h)\subset K</m>.
+Differentiating under the integral sign in <m>x</m> and using <m>\abs{h_ih_j}\le\abs h^2</m> and <m>\int_0^1(1-t)\,dt=\frac12</m>, for every <m>\beta\in\N_0^n</m>,
+<md>\sup_x\abs{\pr_x^\beta\Psi(x,y,h)}
+        \le\sum_{i,j=1}^{m}\abs h^2\cdot\frac12\sup_{X\times Y}\abs{\pr_x^\beta\pr_{y_i}\pr_{y_j}\phi}
+        \le C_\beta\abs h^2,\qquad
+        C_\beta\coloneqq\frac{m^2}{2}\max_{i,j}\sup_{X\times Y}\abs{\pr_x^\beta\pr_{y_i}\pr_{y_j}\phi}.</md>
+Applying the linear form <m>u</m> to the Taylor expansion,
+<md>u(\phi(\cdot,y+h))=u(\phi(\cdot,y))+\sum_{j=1}^{m}h_j\,u\left(\frac{\pr\phi}{\pr y_j}(\cdot,y)\right)+u(\Psi(\cdot,y,h)),</md>
+and by the estimate of Definition <xref ref="def-distribution" text="global"/> on <m>K</m> (with constants <m>C,k</m>),
+<md>\abs{u(\Psi(\cdot,y,h))}\le C\sum_{\abs\beta\le k}\sup_x\abs{\pr_x^\beta\Psi(x,y,h)}\le\Bigl(C\sum_{\abs\beta\le k}C_\beta\Bigr)\abs h^2=O(\abs h^2).</md>
+So <m>y\mapsto u(\phi(\cdot,y))</m> is differentiable with <m>\pr_{y_j}u(\phi(\cdot,y))=u(\pr_{y_j}\phi(\cdot,y))</m>.
+Since <m>\pr_{y_j}\phi\in C_c^\infty(X\times Y)</m> again, induction gives all derivatives, each of which is differentiable, hence continuous.</p>
+</proof>
+</theorem>
+<remark xml:id="rmk-differentiation-under-integral">
+<p>Let <m>E\subset \R^n</m> be any measurable set.
+Then the linear functional <m>u\colon C_c^\infty(\R^n)\to\C</m> defined by
+<md>u(f) = \int_E f(x)\,dx</md>
+is a distribution, i.e. <m>u\in \mathcal D'(\R^n)</m>: it is <m>T_{1_E}</m> from Example <xref ref="ex-L1loc-distribution" text="global"/>, as <m>1_E\in L^1_\mathrm{loc}(\R^n)</m>.
+Let <m>\phi(x,y)\in C_c^\infty(\R^n\times\R^n)</m>.
+Then
+<md>u(\phi(\cdot,y)) = \int_E \phi(x,y)\,dx.</md>
+Theorem <xref ref="thm-smooth-dependence" text="global"/> then says that <m>y\mapsto\int_E\phi(x,y)\,dx</m> is a smooth function in <m>y\in\R^n</m>, and
+<md>\pr_y^\alpha \int_E \phi(x,y)\,dx
+        = \pr_y^\alpha u(\phi(\cdot,y))
+        = u(\pr_y^\alpha\phi(\cdot,y))
+        = \int_E (\pr_y^\alpha\phi)(x,y)\,dx</md>
+for all <m>\alpha\in\N_0^n</m>.
+(This is differentiation under the integral sign.)</p>
+</remark>
+<definition xml:id="def-test-function-convergence">
+<title>Topology on <m>C_c^\infty(X)</m></title>
+<statement>
+<p>Let <m>\phi,\phi_j\in C_c^\infty(X)</m>.
+We say that the sequence <m>\phi_j</m> <em>converges to</em> <m>\phi</m> <em>in</em> <m>C_c^\infty(X)</m> if there exists <m>K\Subset X</m> such that <m>\operatorname{supp} \phi_j\subset K</m> for all <m>j</m>, <m>\operatorname{supp}\phi\subset K</m>, and
+<md>\lim_{j\to+\infty} \sup_{x\in X} \abs{(\pr_x^\alpha(\phi_j-\phi))(x)} = 0</md>
+for all <m>\alpha\in\N_0^n</m>.
+(This is the topology of the direct limit, i.e. the union, of the spaces <m>\set{\phi\in C_c^\infty(X)\mid\operatorname{supp}\phi\subset K}</m> over <m>K\Subset X</m>.)</p>
+</statement>
+</definition>
+<theorem xml:id="thm-sequential-continuity">
+<statement>
+<p>Let <m>u\colon C_c^\infty(X)\to\C</m> be a linear form.
+Then <m>u</m> is a distribution if and only if <m>\lim_{j\to+\infty} u(\phi_j) = u(\phi)</m> for any sequence <m>\phi_j\in C_c^\infty(X)</m> converging to <m>\phi\in C_c^\infty(X)</m> in <m>C_c^\infty(X)</m>.
+In other words, <m>u\in \mathcal D'(X)</m> if and only if <m>u</m> is (sequentially) continuous in the topology of <m>C_c^\infty(X)</m>.</p>
+</statement>
+<proof>
+<p><em>Only if</em>: if <m>\phi_j\to\phi</m> with supports in <m>K</m>, the estimate of Definition <xref ref="def-distribution" text="global"/> on <m>K</m> gives <m>\abs{u(\phi_j)-u(\phi)}\le C\sum_{\abs\alpha\le k}\sup\abs{\pr^\alpha(\phi_j-\phi)}\to0</m>.</p>
+<p><em>If</em>: suppose the estimate fails on some <m>K\Subset X</m>.
+Then for each <m>j</m> (taking <m>C=k=j</m>) there is <m>\phi_j</m> with <m>\operatorname{supp}\phi_j\subset K</m> and <m>\abs{u(\phi_j)}&gt;j\sum_{\abs\alpha\le j}\sup\abs{\pr^\alpha\phi_j}</m>.
+In particular <m>u(\phi_j)\ne0</m>; since the inequality is homogeneous in <m>\phi_j</m>, we may replace <m>\phi_j</m> by <m>\phi_j/\abs{u(\phi_j)}</m> and assume <m>\abs{u(\phi_j)}=1</m>.
+Then
+<md>\sum_{\abs\alpha\le j}\sup_X\abs{\pr^\alpha\phi_j}&lt;\frac1j,
+        \quad\text{so}\quad
+        \sup_X\abs{\pr^\alpha\phi_j}&lt;\frac1j\to0\quad\text{for every fixed }\alpha\text{ and all }j\ge\abs\alpha.</md>
+As all <m>\phi_j</m> are supported in <m>K</m>, this means <m>\phi_j\to0</m> in <m>C_c^\infty(X)</m>, so continuity gives <m>u(\phi_j)\to u(0)=0</m>, contradicting <m>\abs{u(\phi_j)}=1</m>.</p>
+</proof>
+</theorem>
+<definition xml:id="def-distribution-convergence">
+<title>Topology in <m>\mathcal D'(X)</m></title>
+<statement>
+<p>Let <m>u,u_j\in\mathcal D'(X)</m>.
+We say that the sequence <m>u_j</m> <em>converges to</em> <m>u</m> <em>in</em> <m>\mathcal D'(X)</m> if <m>u_j(\phi)\to u(\phi)</m> for every <m>\phi\in C_c^\infty(X)</m>.</p>
+</statement>
+</definition>
+<p>In functional analysis, this is called the <em>weak-<m>^\ast</m> topology</em>.</p>
+<theorem xml:id="thm-distribution-completeness">
+<title>Completeness of <m>\mathcal D'(X)</m></title>
+<statement>
+<p>Let <m>u_j\in\mathcal D'(X)</m>.
+Suppose that <m>\lim_{j\to+\infty} u_j(\phi)</m> exists for all <m>\phi\in C_c^\infty(X)</m>.
+Then the linear form
+<md>
+<mrow>u\colon
+        \begin{array}{ccc}
+            C_c^\infty(X) &amp; \to &amp; \C  \\
+            \phi &amp; \mapsto &amp; u(\phi)\coloneqq \lim_{j\to+\infty} u_j(\phi)
+        \end{array}</mrow>
+</md>
+is a distribution.
+Moreover, for every <m>K\Subset X</m>, there exist <m>C&gt;0</m> and <m>k\in\N_0</m>, <em>independent of</em> <m>j</m>, such that
+<md>
+<mrow xml:id="eq-uniform-bound" number="yes">\abs{u_j(\phi)} \le C\sum_{\abs{\alpha}\le k}\sup_X \abs{(\pr_x^\alpha\phi)(x)}</mrow>
+</md>
+for all <m>\phi\in C_c^\infty(X)</m> with <m>\operatorname{supp}\phi\subset K</m> and for all <m>j\in\N</m>.</p>
+</statement>
+</theorem>
+<remark xml:id="rmk-uniform-boundedness">
+<p>Theorem <xref ref="thm-distribution-completeness" text="global"/> can be proven by the concept of uniform boundedness and the Baire--Hausdorff method in functional analysis (these two important principles of functional analysis stand behind this proof; they will be introduced in this week's homework).
+We will give a direct proof by contradiction.</p>
+</remark>
+<proof>
+<p>Letting <m>j\to+\infty</m> in <xref ref="eq-uniform-bound" text="global"/> shows that <m>u</m> is a distribution, so it suffices to prove <xref ref="eq-uniform-bound" text="global"/>.
+Fix <m>K</m>, write <m>p_k(\phi)=\sum_{\abs\alpha\le k}\sup_X\abs{\pr^\alpha\phi}</m> (increasing in <m>k</m>), and suppose that for every <m>C,k</m> there are <m>\ell</m> and <m>\phi</m> with <m>\operatorname{supp}\phi\subset K</m> and <m>\abs{u_\ell(\phi)}&gt;C\,p_k(\phi)</m>; such <m>\phi</m> may be rescaled freely.</p>
+<p><em>Claim: there are <m>\ell_1&lt;\ell_2&lt;\cdots</m>, <m>k_1&lt;k_2&lt;\cdots</m> and <m>\phi_j</m> with <m>\operatorname{supp}\phi_j\subset K</m> such that</em>
+<ol marker="(i)">
+<li>
+<p><m>p_{k_j}(\phi_j)\le 2^{-j}</m>,</p>
+</li>
+<li>
+<p><m>\abs{u_{\ell_j}(\phi_j)} - \abs{u_{\ell_j}(\phi_1)} - \cdots - \abs{u_{\ell_j}(\phi_{j-1})} \ge j</m>, and</p>
+</li>
+<li>
+<p><m>\abs{u_{\ell_i}(\phi_j)} &lt; 2^{-j}</m> for all <m>i&lt;j</m>.</p>
+</li>
+</ol>
+For <m>j=1</m>, take <m>\abs{u_{\ell_1}(\phi_1)}&gt;2p_1(\phi_1)</m>, normalized to <m>\abs{u_{\ell_1}(\phi_1)}=1</m>, and <m>k_1=1</m>.
+Given the first <m>j_0</m> terms, the finitely many <m>u_\ell</m> with <m>\ell\le\ell_{j_0}</m> satisfy a common estimate
+<md>
+<mrow xml:id="eq-finite-bound" number="yes">\abs{u_\ell(\phi)}\le\widehat C\,p_{\widehat k}(\phi)\qquad(\operatorname{supp}\phi\subset K,\ \ell\le\ell_{j_0}),</mrow>
+</md>
+and <m>M=\sum_{i\le j_0}\sup_\ell\abs{u_\ell(\phi_i)}&lt;+\infty</m> since convergent sequences are bounded.
+Let <m>a=j_0+1+M</m>, <m>C'=(a+\widehat C)^22^{j_0+1}</m>, <m>L=\max\set{k_{j_0}+1,\widehat k}</m>, and pick <m>\ell,\phi</m> with <m>\abs{u_\ell(\phi)}&gt;C'p_L(\phi)</m>, rescaled so that <m>\abs{u_\ell(\phi)}=a</m>.
+If <m>\ell\le\ell_{j_0}</m>, then <xref ref="eq-finite-bound" text="global"/> would give <m>\abs{u_\ell(\phi)}\le\widehat C\,p_{\widehat k}(\phi)\le\widehat C\,p_L(\phi)\le C'p_L(\phi)</m>, a contradiction; so <m>\ell&gt;\ell_{j_0}</m>.
+Set <m>\ell_{j_0+1}=\ell</m>, <m>k_{j_0+1}=L</m> and <m>\phi_{j_0+1}=\phi</m>, and check (i)--(iii) for <m>j=j_0+1</m>:
+<md>
+<mrow>\text{(i)}\quad &amp; p_{k_{j_0+1}}(\phi_{j_0+1})&lt;\frac{\abs{u_\ell(\phi)}}{C'}=\frac{a}{(a+\widehat C)^2}\,2^{-j_0-1}\le\frac1a\,2^{-j_0-1}&lt;2^{-j_0-1},</mrow>
+<mrow>\text{(ii)}\quad &amp; \abs{u_{\ell_{j_0+1}}(\phi_{j_0+1})}-\sum_{i=1}^{j_0}\abs{u_{\ell_{j_0+1}}(\phi_i)}\ge a-M=j_0+1,</mrow>
+<mrow>\text{(iii)}\quad &amp; \abs{u_{\ell_i}(\phi_{j_0+1})}\le\widehat C\,p_L(\phi_{j_0+1})&lt;\frac{\widehat C\,a}{(a+\widehat C)^2}\,2^{-j_0-1}\le\frac14\,2^{-j_0-1}&lt;2^{-(j_0+1)}\quad(i\le j_0),</mrow>
+</md>
+where (iii) uses <xref ref="eq-finite-bound" text="global"/> (as <m>\ell_i\le\ell_{j_0}</m>) and <m>(a+\widehat C)^2\ge4a\widehat C</m>.</p>
+<p>Now put <m>\phi=\sum_j\phi_j</m>.
+Since <m>k_j\ge j</m>, (i) gives <m>\sum_jp_N(\phi_j)&lt;+\infty</m> for every <m>N</m>, so the series converges in <m>C_c^\infty(X)</m> with <m>\operatorname{supp}\phi\subset K</m>, and by Theorem <xref ref="thm-sequential-continuity" text="global"/>, <m>u_{\ell_j}(\phi)=\sum_iu_{\ell_j}(\phi_i)</m>.
+Splitting this sum into <m>i=j</m>, <m>i&lt;j</m> and <m>i&gt;j</m>, and using (ii) and (iii) (with the roles <m>\ell_j</m>, <m>i=j+s</m>),
+<md>
+<mrow>\abs{u_{\ell_j}(\phi)}
+        &amp;\ge\abs{u_{\ell_j}(\phi_j)}-\sum_{i=1}^{j-1}\abs{u_{\ell_j}(\phi_i)}-\sum_{s=1}^{+\infty}\abs{u_{\ell_j}(\phi_{j+s})}</mrow>
+<mrow>&amp;\ge j-\sum_{s=1}^{+\infty}2^{-(j+s)}\ge j-1\to+\infty,</mrow>
+</md>
+contradicting the convergence, hence boundedness, of <m>(u_\ell(\phi))_\ell</m>.</p>
+</proof>
+</subsection>
+<subsection xml:id="ssec-1112">
+<title>20261112</title>
+<definition xml:id="def-distribution-derivative">
+<statement>
+<p>Let <m>u\in\mathcal D'(X)</m>.
+For <m>k=1,2,\dots,n</m>, let <m>\pr u/\pr x_k</m> be the distribution given by
+<md>\frac{\pr u}{\pr x_k}(\phi) = -u\left( \frac{\pr\phi}{\pr x_k} \right).</md>
+For <m>f\in C^\infty(X)</m>, let <m>f.u</m> be the distribution given by
+<md>f.u(\phi) = u(f\phi).</md></p>
+</statement>
+</definition>
+<lemma xml:id="lem-derivative-product-distribution">
+<statement>
+<p>The linear forms <m>\pr u/\pr x_k</m> and <m>f.u</m> in Definition <xref ref="def-distribution-derivative" text="global"/> are indeed distributions.</p>
+</statement>
+<proof>
+<p>Both are well defined and linear, since <m>\pr_{x_k}\phi,f\phi\in C_c^\infty(X)</m> with support in <m>\operatorname{supp}\phi</m>.
+Let <m>K\Subset X</m>, and let <m>C,k_0</m> be the constants of <m>u</m> on <m>K</m>.
+For <m>\operatorname{supp}\phi\subset K</m>, apply the estimate to <m>\pr_{x_k}\phi</m>; each <m>\pr^\alpha\pr_{x_k}</m> with <m>\abs\alpha\le k_0</m> is some <m>\pr^\beta</m> with <m>\abs\beta\le k_0+1</m>, so
+<md>\left\lvert \frac{\pr u}{\pr x_k}(\phi) \right\rvert=\left\lvert u\left( \frac{\pr\phi}{\pr x_k} \right) \right\rvert
+        \le C\sum_{\abs\alpha\le k_0}\sup\abs{\pr^\alpha\pr_{x_k}\phi}
+        \le C\sum_{\abs\beta\le k_0+1}\sup\abs{\pr^\beta\phi}.</md>
+For <m>f.u</m>, let <m>A=\max_{\abs\beta\le k_0}\sup_K\abs{\pr^\beta f}&lt;+\infty</m>.
+By the Leibniz rule <m>\pr^\alpha(f\phi)=\sum_{\beta\le\alpha}\binom\alpha\beta\pr^\beta f\,\pr^{\alpha-\beta}\phi</m> and <m>\sum_{\beta\le\alpha}\binom\alpha\beta=2^{\abs\alpha}</m>, for <m>\abs\alpha\le k_0</m>,
+<md>\sup\abs{\pr^\alpha(f\phi)}
+        \le\sum_{\beta\le\alpha}\binom\alpha\beta\sup_K\abs{\pr^\beta f}\,\sup\abs{\pr^{\alpha-\beta}\phi}
+        \le2^{k_0}A\sum_{\abs\gamma\le k_0}\sup\abs{\pr^\gamma\phi},</md>
+and summing over the <m>\abs\alpha\le k_0</m> in the estimate for <m>u(f\phi)</m>,
+so <m>f.u</m> satisfies the estimate with <m>C'=C\cdot\#\set{\alpha\mid\abs\alpha\le k_0}\cdot2^{k_0}A</m> (or <m>1</m> if this vanishes).</p>
+</proof>
+</lemma>
+<example xml:id="ex-distributional-derivative">
+<p>Let <m>f\in L_\mathrm{loc}^1(X)</m>.
+Then <m>T_f</m>, the function given by
+<md>T_f(\phi) = \int_{X}f(x)\phi(x)\,dx,</md>
+is a distribution (Example <xref ref="ex-L1loc-distribution" text="global"/>).
+We sometimes write <m>f</m> to represent <m>T_f</m>.
+Note that if <m>f\in C^1(X)</m>, then
+<md>\frac{\pr T_f}{\pr x_k} (\phi)
+        = -\int_{X}f(x) \frac{\pr\phi}{\pr x_k}\,dx
+        = \int_X \frac{\pr f}{\pr x_k}\phi(x)\,dx
+        = T_{\pr f/\pr x_k}(\phi).</md>
+The middle equality is integration by parts: extend <m>f\phi</m> by zero to a compactly supported <m>C^1</m> function <m>g</m> on <m>\R^n</m>; then <m>\int_{\R^n}\pr_{x_k}g\,dx=0</m> by Fubini's theorem (Theorem <xref ref="thm-fubini-2" text="global"/>) and the fundamental theorem of calculus in the variable <m>x_k</m>, and <m>\pr_{x_k}(f\phi)=\pr_{x_k}f\cdot\phi+f\cdot\pr_{x_k}\phi</m>.
+So the distributional derivative of <m>T_f</m> is <m>T_{\pr f/\pr x_k}</m>, the distribution of the classical derivative.</p>
+</example>
+<remark xml:id="rmk-continuous-identification">
+<p>The identification <m>f=T_f</m> is legitimate for continuous functions: if <m>f,g\in C^0(X)</m> and <m>T_f=T_g</m>, then <m>f=g</m>.
+Indeed, let <m>h=f-g</m> and suppose <m>h(x_0)\ne0</m> for some <m>x_0</m>.
+Choose <m>c\in\C</m> with <m>\abs c=1</m> and <m>\operatorname{Re}(ch(x_0))&gt;0</m>; by continuity, <m>\operatorname{Re}(ch)&gt;\eta&gt;0</m> on some ball <m>B_\rho(x_0)\subset X</m>.
+Let <m>F(x)=\phi((x-x_0)/\delta)</m> with <m>\phi</m> from Lemma <xref ref="lem-bump" text="global"/> and <m>\delta&lt;\rho</m> small; then <m>F\ge0</m>, <m>F\not\equiv0</m>, <m>F\in C_c^\infty(B_\rho(x_0))</m>.
+So <m>\operatorname{Re}(c\,T_h(F))=\int\operatorname{Re}(ch)F\ge\eta\int F&gt;0</m>, contradicting <m>T_h=0</m>.
+(More generally, for <m>f,g\in L^1_\mathrm{loc}(X)</m> one has <m>T_f=T_g</m> if and only if <m>f=g</m> almost everywhere; we do not need this.)</p>
+</remark>
+<example xml:id="ex-heaviside">
+<p>Consider the Heaviside function
+<md>
+<mrow>H(x) =
+        \begin{cases}
+            1 &amp; \text{if } x\ge 0 \\
+            0 &amp; \text{if } x&lt;0
+        \end{cases}.</mrow>
+</md>
+It is clear that <m>H\in L_\mathrm{loc}^1(\R)</m>.
+For <m>\phi\in C_c^\infty(\R)</m>, say <m>\operatorname{supp}\phi\subset[-R,R]</m>, we have
+<md>\frac{\pr T_H}{\pr x}(\phi)
+        = -T_H\left( \frac{\pr\phi}{\pr x} \right)
+        = -\int_{0}^{+\infty} \frac{\pr\phi}{\pr x}\,dx
+        = -\left(\phi(R)-\phi(0)\right)
+        = \phi(0)
+        = \delta_0(\phi),</md>
+so <m>T_H' = \delta_0</m>.
+That is, the derivative of the Heaviside function is the delta distribution (Example <xref ref="ex-dirac" text="global"/>), even though <m>H</m> is not differentiable at <m>0</m> in the classical sense.</p>
+</example>
+<example xml:id="ex-indicator-derivative">
+<p>Let <m>Y=\set{x\in\R^n\mid r(x)&lt;0}</m>, where <m>r\in C^1(\R^n)</m> and <m>\nabla r(x) \ne 0</m> on <m>\pr Y= \set{x\in\R^n\mid r(x)=0}</m>.
+By the implicit function theorem, <m>\pr Y</m> is a <m>C^1</m> hypersurface and <m>Y</m> lies locally on one side of it.
+We compute the derivative of <m>T_{1_Y}= 1_Y\in L^1_\mathrm{loc}(\R^n)</m>:
+Let <m>N=(N_1,\dots,N_n)</m> be the inward normal vector of <m>\pr Y</m>, that is, <m>N=-\nabla r/\abs{\nabla r}</m>, and let <m>\,dS</m> be the volume form (surface measure) on <m>\pr Y</m>.
+For <m>\phi\in C_c^\infty(\R^n)</m>, the Gauss--Green theorem (Example <xref ref="ex-gauss-green" text="global"/>), applied to the compactly supported vector field <m>\phi\, e_k</m> on <m>Y</m> (whose outward normal is <m>-N</m>), gives <m>\int_Y\pr_{x_k}\phi\,dx=-\int_{\pr Y}N_k\phi\,dS</m>.
+Hence
+<md>\frac{\pr 1_Y}{\pr x_k} (\phi)
+        = - 1_Y\left( \frac{\pr\phi}{\pr x_k} \right)
+        = -\int_Y \frac{\pr\phi}{\pr x_k}\,dx
+        = \int_{\pr Y} N_k\phi\,dS.</md>
+Therefore,
+<md>\frac{\pr 1_Y}{\pr x_k} = N_k \,.\, \delta_{\pr Y},</md>
+where <m>\delta_{\pr Y}</m> is the distribution sending <m>\phi\in C_c^\infty(\R^n)</m> to <m>\int_{\pr Y}\phi\,dS</m>, and <m>N_k\delta_{\pr Y}</m> is the distribution <m>\phi\mapsto\int_{\pr Y}N_k\phi\,dS</m>.
+(These are distributions of order <m>0</m>: <m>\abs{\int_{\pr Y}N_k\phi\,dS}\le\operatorname{area}(\pr Y\cap K)\sup\abs\phi</m> if <m>\operatorname{supp}\phi\subset K</m>, and <m>\operatorname{area}(\pr Y\cap K)&lt;+\infty</m> since <m>\pr Y\cap K</m> is compact.)
+For <m>n=1</m> and <m>r(x)=-x</m>, we have <m>Y=(0,+\infty)</m>, <m>N=1</m>, <m>\delta_{\pr Y}=\delta_0</m>, and we recover <m>T_H'=\delta_0</m> (Example <xref ref="ex-heaviside" text="global"/>).</p>
+</example>
+<definition xml:id="def-distribution-restriction">
+<statement>
+<p>Let <m>U\subset X</m> be an open set.
+Every <m>\phi\in C_c^\infty(U)</m> extends by zero to an element of <m>C_c^\infty(X)</m>, so we regard <m>C_c^\infty(U)\subset C_c^\infty(X)</m>.
+For <m>u\in\mathcal D'(X)</m>, we denote by <m>u|_{U}\in\mathcal D'(U)</m> the restriction of <m>u</m> to <m>C_c^\infty(U)</m>.
+(It is a distribution: a compact subset of <m>U</m> is a compact subset of <m>X</m>, so the estimate for <m>u</m> gives the same estimate for <m>u|_U</m>.)
+We say that <m>u</m> <em>vanishes on</em> <m>U</m> if <m>u|_U=0</m>, that is, if <m>u(\phi)=0</m> for all <m>\phi\in C_c^\infty(U)</m>.</p>
+</statement>
+</definition>
+<theorem xml:id="thm-localization">
+<title>Localization</title>
+<statement>
+<p>Let <m>u\in\mathcal D'(X)</m>.
+If for every <m>p\in X</m>, there exists an open neighborhood <m>U_p\subset X</m> such that <m>u|_{U_p}=0</m>, then <m>u=0</m>.</p>
+</statement>
+<proof>
+<p>Let <m>\phi\in C_c^\infty(X)</m>.
+Finitely many of the <m>U_p</m>, say <m>U_1,\dots,U_N</m>, cover <m>\operatorname{supp}\phi</m>.
+By Theorem <xref ref="thm-partition-of-unity" text="global"/>, <m>\phi=\sum_j\phi_j</m> with <m>\phi_j\in C_c^\infty(U_j)</m>, so <m>u(\phi)=\sum_ju|_{U_j}(\phi_j)=0</m>.</p>
+</proof>
+</theorem>
+<definition xml:id="def-distribution-support">
+<statement>
+<p>Let <m>u\in\mathcal D'(X)</m>.
+The support of <m>u</m>, denoted by <m>\operatorname{supp} u</m>, is the set of points <m>p</m> in <m>X</m> such that <m>u|_{U_p}\ne 0</m> for every open neighborhood <m>U_p\subset X</m>.
+That is,
+<md>X\setminus\operatorname{supp} u=\set{x\in X\mid \text{there is an open set }U_x\subset X\text{ with }x\in U_x\text{ and }u|_{U_x}=0}.</md></p>
+</statement>
+</definition>
+<lemma xml:id="lem-support-closed">
+<statement>
+<p>Let <m>u\in\mathcal D'(X)</m>.
+Then <m>\operatorname{supp} u</m> is closed in <m>X</m>, and <m>u</m> vanishes on the open set <m>X\setminus\operatorname{supp} u</m>.</p>
+</statement>
+<proof>
+<p>If <m>u|_{U_x}=0</m>, then every point of <m>U_x</m> lies outside <m>\operatorname{supp} u</m>, so <m>X\setminus\operatorname{supp} u</m> is open.
+Every point of <m>X\setminus\operatorname{supp} u</m> has a neighborhood on which <m>u</m> vanishes, so <m>u|_{X\setminus\operatorname{supp} u}=0</m> by Theorem <xref ref="thm-localization" text="global"/>.</p>
+</proof>
+</lemma>
+<definition xml:id="def-compactly-supported-distributions">
+<statement>
+<p>Let <m>\mathcal E'(X)</m> be the set of <m>u\in\mathcal D'(X)</m> such that <m>\operatorname{supp} u</m> is a compact subset of <m>X</m>.</p>
+</statement>
+</definition>
+<example xml:id="ex-dirac-support">
+<p>For <m>p\in X</m>, let <m>\delta_p</m> be the distribution sending <m>\phi</m> to <m>\phi(p)</m>.
+Then <m>\operatorname{supp}\delta_p = \set{p}</m>: if <m>x\ne p</m>, then <m>\delta_p</m> vanishes on <m>X\setminus\set p</m> (as <m>\phi(p)=0</m> for every <m>\phi\in C_c^\infty(X\setminus\set p)</m>), so <m>x\notin\operatorname{supp}\delta_p</m>; and every neighborhood <m>U</m> of <m>p</m> contains a test function <m>F\ge0</m> with <m>F(p)&gt;0</m> (Remark <xref ref="rmk-scaled-bump" text="global"/>), so <m>\delta_p|_U\ne0</m> and <m>p\in\operatorname{supp}\delta_p</m>.
+Thus <m>\delta_p\in\mathcal E'(X)</m>.</p>
+</example>
+<example xml:id="ex-test-functions-compact-support">
+<p>Under the identification <m>f=T_f</m>, we have <m>C_c^\infty(X)\subset\mathcal E'(X)</m>.
+Indeed, if <m>x\notin\operatorname{supp} f</m>, then <m>f</m> vanishes on a neighborhood <m>U</m> of <m>x</m>, so <m>T_f|_U=0</m> and <m>x\notin\operatorname{supp} T_f</m>.
+Hence <m>\operatorname{supp} T_f\subset\operatorname{supp} f</m>, and <m>\operatorname{supp} T_f</m> is a closed subset of <m>X</m> contained in the compact set <m>\operatorname{supp} f</m>, so it is compact.</p>
+</example>
+<theorem xml:id="thm-glueing">
+<title>Glueing</title>
+<statement>
+<p>Let <m>X_1,X_2,\dots</m> be open sets and let <m>X=\bigcup_{j=1}^{+\infty}X_j</m>.
+If <m>u_j\in\mathcal D'(X_j)</m> is such that <m>u_j=u_k</m> on <m>X_j\cap X_k</m> for all <m>j</m> and for all <m>k</m> (that is, <m>u_j|_{X_j\cap X_k}=u_k|_{X_j\cap X_k}</m>), then there exists a unique <m>u\in\mathcal D'(X)</m> such that <m>u|_{X_j} = u_j</m> for all <m>j</m>.</p>
+</statement>
+<proof>
+<p>For <m>\phi\in C_c^\infty(X)</m>, Theorem <xref ref="thm-partition-of-unity" text="global"/> gives a finite decomposition <m>\phi=\sum_j\phi_j</m> with <m>\phi_j\in C_c^\infty(X_j)</m>; define <m>u(\phi)=\sum_ju_j(\phi_j)</m>.</p>
+<p><em>Well-definedness.</em>
+Let <m>\phi=\sum_j\widetilde\phi_j</m> be another such decomposition, and let <m>K=\bigcup_j\operatorname{supp}(\widetilde\phi_j-\phi_j)</m>, a compact set.
+By Theorems <xref ref="thm-cutoff" text="global"/> and <xref ref="thm-partition-of-unity" text="global"/>, there are <m>\Psi_k\in C_c^\infty(X_k)</m>, finitely many nonzero, with <m>\sum_k\Psi_k=1</m> near <m>K</m>.
+Since <m>\Psi_k(\widetilde\phi_j-\phi_j)\in C_c^\infty(X_j\cap X_k)</m> and <m>u_j=u_k</m> there,
+<md>\sum_ju_j(\widetilde\phi_j-\phi_j)
+        =\sum_{j,k}u_k\bigl(\Psi_k(\widetilde\phi_j-\phi_j)\bigr)
+        =\sum_ku_k\Bigl(\Psi_k\sum_j(\widetilde\phi_j-\phi_j)\Bigr)=0.</md>
+Hence <m>u</m> is well defined and linear, and <m>u|_{X_j}=u_j</m> (take the decomposition <m>\phi=\phi_j</m>).
+Uniqueness follows from Theorem <xref ref="thm-localization" text="global"/>.</p>
+<p><em><m>u</m> is a distribution.</em>
+For <m>K\Subset X</m>, take <m>\varphi_j\in C_c^\infty(X_j)</m>, finitely many nonzero, with <m>\sum_j\varphi_j=1</m> near <m>K</m>, and let <m>C_j,k_j</m> be the constants of <m>u_j</m> on <m>\operatorname{supp}\varphi_j</m>.
+Let <m>J</m> be the finite set of <m>j</m> with <m>\varphi_j\ne0</m>, <m>C=\max_{j\in J}C_j</m>, <m>k=\max_{j\in J}k_j</m> and <m>A=\max_{j\in J}\max_{\abs\beta\le k}\sup\abs{\pr^\beta\varphi_j}</m>.
+For <m>\operatorname{supp}\phi\subset K</m> we have <m>\phi=\sum_{j\in J}\varphi_j\phi</m> with <m>\varphi_j\phi\in C_c^\infty(X_j)</m> supported in <m>\operatorname{supp}\varphi_j</m>, so by the definition of <m>u</m> and the Leibniz rule (as in Lemma <xref ref="lem-derivative-product-distribution" text="global"/>),
+<md>\abs{u(\phi)}
+        \le\sum_{j\in J}\abs{u_j(\varphi_j\phi)}
+        \le\sum_{j\in J}C_j\sum_{\abs\alpha\le k_j}\sup\abs{\pr^\alpha(\varphi_j\phi)}
+        \le\#J\cdot C\cdot\#\set{\alpha\mid\abs\alpha\le k}\cdot2^kA\sum_{\abs\gamma\le k}\sup\abs{\pr^\gamma\phi}.</md></p>
+</proof>
+</theorem>
+<aside>
+<title>Supplement</title>
+<p>Theorem <xref ref="thm-localization" text="global"/> and Theorem <xref ref="thm-glueing" text="global"/> say that the presheaf of distributions is a sheaf.
+Recall the definitions.
+A <em>presheaf</em> <m>\mathcal F</m> of vector spaces on a topological space <m>X</m> assigns to every open set <m>U\subset X</m> a vector space <m>\mathcal F(U)</m> and to every pair of open sets <m>V\subset U</m> a linear <em>restriction map</em> <m>\mathcal F(U)\to\mathcal F(V)</m>, <m>s\mapsto s|_V</m>, such that <m>s|_U=s</m> and <m>(s|_V)|_W=s|_W</m> for <m>W\subset V\subset U</m>.
+It is a <em>sheaf</em> if for every open set <m>U</m> and every open cover <m>U=\bigcup_{i}U_i</m>, the following hold.
+<ol marker="(i)">
+<li>
+<p>(Locality) If <m>s\in\mathcal F(U)</m> and <m>s|_{U_i}=0</m> for all <m>i</m>, then <m>s=0</m>.</p>
+</li>
+<li>
+<p>(Glueing) If <m>s_i\in\mathcal F(U_i)</m> satisfy <m>s_i|_{U_i\cap U_j}=s_j|_{U_i\cap U_j}</m> for all <m>i,j</m>, then there is an <m>s\in\mathcal F(U)</m> with <m>s|_{U_i}=s_i</m> for all <m>i</m> (unique by locality).</p>
+</li>
+</ol>
+The assignment <m>U\mapsto\mathcal D'(U)</m> for open sets <m>U\subset\R^n</m>, with the restriction maps <m>u\mapsto u|_V</m> above, is a presheaf.
+Locality is Theorem <xref ref="thm-localization" text="global"/> (applied to the open set <m>U</m>) and glueing is Theorem <xref ref="thm-glueing" text="global"/>.
+The same is true for <m>U\mapsto C^\infty(U)</m> and <m>U\mapsto L^1_\mathrm{loc}(U)</m> (identified with <m>T_f</m>, up to almost everywhere equality), and the embedding <m>f\mapsto T_f</m> is compatible with restrictions.</p>
+</aside>
+<definition xml:id="def-distribution-convolution">
+<statement>
+<p>Let <m>u\in\mathcal D'(\R^n)</m> and let <m>v\in C_c^\infty(\R^n)</m>.
+The convolution <m>u\ast v</m> is the function defined by
+<md>(u\ast v)(x)
+        = u(v(x-\cdot )).</md>
+(For every <m>x</m>, <m>y\mapsto v(x-y)</m> is in <m>C_c^\infty(\R^n)</m>, so the right-hand side makes sense.)</p>
+</statement>
+</definition>
+<lemma xml:id="lem-distribution-convolution">
+<statement>
+<p><ol marker="(i)">
+<li>
+<p><m>u\ast v\in C^\infty(\R^n)</m> and <m>\pr_x^\alpha(u\ast v) = u\ast (\pr_x^\alpha v)</m> for all <m>\alpha\in\N_0^n</m>.</p>
+</li>
+<li>
+<p><m>\operatorname{supp}(u\ast v) \subset \operatorname{supp} u + \operatorname{supp} v = \set{x+y\mid x\in\operatorname{supp} u, y\in\operatorname{supp} v}</m>.
+Therefore, if <m>u\in \mathcal E'(\R^n)</m>, then <m>u\ast v\in C_c^\infty(\R^n)</m>.</p>
+</li>
+</ol></p>
+</statement>
+<proof>
+<p>(i) Fix <m>x_0</m> and let <m>K_0=\overline B_1(x_0)-\operatorname{supp} v</m>.
+By Theorem <xref ref="thm-cutoff" text="global"/>, take <m>\chi\in C_c^\infty(\R^n)</m> with <m>\chi=1</m> near <m>K_0</m> and <m>\theta\in C_c^\infty(B_2(x_0))</m> with <m>\theta=1</m> near <m>\overline B_1(x_0)</m>, and put <m>\Phi(y,x)=\chi(y)\theta(x)v(x-y)\in C_c^\infty(\R^n\times B_2(x_0))</m>.
+For <m>x\in B_1(x_0)</m>: <m>\theta=1</m> near <m>x</m>, and <m>v(x-y)\ne0</m> forces <m>y\in x-\operatorname{supp} v\subset K_0</m>, where <m>\chi=1</m>; hence
+<md>\Phi(y,x)=v(x-y),\qquad\pr_x^\alpha\Phi(y,x)=(\pr^\alpha v)(x-y)\qquad(y\in\R^n,\ x\in B_1(x_0)),</md>
+the second identity by the same argument applied to <m>\pr^\alpha v</m> (note <m>\operatorname{supp}\pr^\alpha v\subset\operatorname{supp} v</m>).
+By Theorem <xref ref="thm-smooth-dependence" text="global"/>, <m>x\mapsto u(\Phi(\cdot,x))</m> is smooth, and for <m>x\in B_1(x_0)</m>,
+<md>\pr_x^\alpha(u\ast v)(x)=\pr_x^\alpha u(\Phi(\cdot,x))=u(\pr_x^\alpha\Phi(\cdot,x))=u\bigl((\pr^\alpha v)(x-\cdot)\bigr)=(u\ast\pr^\alpha v)(x).</md></p>
+<p>(ii) The set <m>\operatorname{supp} u+\operatorname{supp} v</m> is closed (closed plus compact).
+If <m>x_0\notin\operatorname{supp} u+\operatorname{supp} v</m>, then <m>x_0-\operatorname{supp} v</m> is compact and disjoint from <m>\operatorname{supp} u</m>, so it has positive distance <m>d</m> from <m>\operatorname{supp} u</m>.
+For <m>\abs{x-x_0}&lt;d</m>, <m>v(x-\cdot)\in C_c^\infty(\R^n\setminus\operatorname{supp} u)</m>, so <m>(u\ast v)(x)=0</m> by Lemma <xref ref="lem-support-closed" text="global"/>.
+If <m>u\in\mathcal E'(\R^n)</m>, then <m>\operatorname{supp} u+\operatorname{supp} v</m> is compact.</p>
+</proof>
+</lemma>
+<example xml:id="ex-delta-convolution">
+<p>Let <m>\phi\in C_c^\infty(\R^n)</m>.
+Then <m>\delta_0\ast \phi = \delta_0(\phi(x-\cdot)) = \phi(x)</m>, that is, <m>\delta_0\ast\phi=\phi\in C_c^\infty(\R^n)</m>.</p>
+</example>
+<example xml:id="ex-Lloc-convolution">
+<p>Let <m>f\in L_\mathrm{loc}^1(\R^n)</m> and let <m>\phi\in C_c^\infty(\R^n)</m>.
+Then
+<md>(f\ast\phi)(x) = (T_f\ast\phi)(x) = T_f(\phi(x-\cdot)) = \int_{\R^n}f(y)\phi(x-y)\,dy,</md>
+which is the convolution of the function <m>f</m> with <m>\phi</m> defined before (Remark <xref ref="rmk-convolution-Lloc" text="global"/>).</p>
+</example>
+<theorem xml:id="thm-convolution-associative">
+<statement>
+<p>If <m>u\in\mathcal D'(\R^n)</m> and <m>\phi,\psi\in C_c^\infty(\R^n)</m>, then <m>(u\ast \phi)\ast\psi = u\ast (\phi\ast \psi)</m>.</p>
+</statement>
+<proof>
+<p>Both sides make sense by Lemmas <xref ref="lem-distribution-convolution" text="global"/> and <xref ref="lem-convolution-properties" text="global"/>.
+For <m>h&gt;0</m>, consider the Riemann sums
+<md>f_h(x)\coloneqq\sum_{k\in\Z^n}\phi(x-kh)\psi(kh)h^n,</md>
+finitely many terms, with <m>\operatorname{supp} f_h\subset\operatorname{supp}\phi+\operatorname{supp}\psi</m> for all <m>h</m>.
+<em>Claim: <m>f_h\to\phi\ast\psi</m> in <m>C_c^\infty(\R^n)</m> as <m>h\to0^+</m>.</em>
+Fix <m>\alpha</m> and let <m>G(x,y)=(\pr^\alpha\phi)(x-y)\psi(y)</m>.
+By Lemma <xref ref="lem-convolution-properties" text="global"/>(ii),
+<md>\pr^\alpha(\phi\ast\psi)(x)=\int_{\R^n}G(x,y)\,dy,\qquad
+        \pr^\alpha f_h(x)=\sum_{k\in\Z^n}G(x,kh)h^n=\sum_{k\in\Z^n}\int_{Q_k}G(x,kh)\,dy,</md>
+where <m>Q_k=kh+[0,h)^n</m> are the cubes of volume <m>h^n</m> tiling <m>\R^n</m>.
+Hence
+<md>\pr^\alpha f_h(x)-\pr^\alpha(\phi\ast\psi)(x)=\sum_{k\in\Z^n}\int_{Q_k}\bigl(G(x,kh)-G(x,y)\bigr)\,dy.</md>
+<m>G</m> is continuous with compact support, hence uniformly continuous; let <m>\omega(t)=\sup\set{\abs{G(x,y)-G(x,y')}\mid x\in\R^n,\ \abs{y-y'}\le t}</m>, so <m>\omega(t)\to0</m> as <m>t\to0</m>.
+For <m>y\in Q_k</m> we have <m>\abs{y-kh}\le\sqrt n\,h</m>, and a term is nonzero only if <m>Q_k</m> meets <m>\operatorname{supp}\psi</m>, in which case <m>Q_k\subset S_1\coloneqq\set{y\mid\operatorname{dist}(y,\operatorname{supp}\psi)\le\sqrt n}</m> (for <m>h\le1</m>).
+Therefore
+<md>\sup_x\abs{\pr^\alpha f_h(x)-\pr^\alpha(\phi\ast\psi)(x)}\le\omega(\sqrt n\,h)\,\abs{S_1}\to0.</md></p>
+<p>Fix <m>x</m>.
+Since <m>\pr_y^\alpha[g(x-y)]=(-1)^{\abs\alpha}(\pr^\alpha g)(x-y)</m>, the claim gives <m>f_h(x-\cdot)\to(\phi\ast\psi)(x-\cdot)</m> in <m>C_c^\infty(\R^n)</m>, so by Theorem <xref ref="thm-sequential-continuity" text="global"/>,
+<md>(u\ast(\phi\ast\psi))(x)=u\bigl((\phi\ast\psi)(x-\cdot)\bigr)=\lim_{h\to0}u\bigl(f_h(x-\cdot)\bigr).</md>
+By linearity of <m>u</m> (the sum is finite),
+<md>u\bigl(f_h(x-\cdot)\bigr)
+        =\sum_{k\in\Z^n}u\bigl(\phi(x-kh-\cdot)\bigr)\psi(kh)h^n
+        =\sum_{k\in\Z^n}(u\ast\phi)(x-kh)\psi(kh)h^n.</md>
+The last sums are Riemann sums of the continuous compactly supported function <m>y\mapsto(u\ast\phi)(x-y)\psi(y)</m>, so they converge to <m>((u\ast\phi)\ast\psi)(x)</m>.</p>
+</proof>
+</theorem>
 </subsection>
 </section>
 <backmatter>
