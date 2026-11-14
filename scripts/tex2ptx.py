@@ -392,9 +392,13 @@ def render(items, level):
             ttl = ('%s: %s' % (fixed, opt) if opt else fixed) if fixed else opt
             out.append('<%s%s>\n%s%s\n</%s>' % (tag, idattr, title_xml(ttl),
                                                 parse_blocks(content, 'statement'), tag))
-        elif env in ('supp', 'todo'):
-            out.append('<aside%s>\n<title>%s</title>\n%s\n</aside>' % (
-                idattr, LABELNAME.get(env, 'TODO'), parse_blocks(content, 'text')))
+        elif env == 'supp':
+            # unnumbered, in the normal text flow (not an <aside>), so numbering matches the PDF
+            out.append('<paragraphs%s>\n<title>Supplement</title>\n%s\n</paragraphs>' % (
+                idattr, parse_blocks(content, 'statement')))
+        elif env == 'todo':
+            out.append('<aside%s>\n<title>TODO</title>\n%s\n</aside>' % (
+                idattr, parse_blocks(content, 'text')))
         else:
             warnings.append('unhandled env ' + env)
     xml = '\n'.join(out)

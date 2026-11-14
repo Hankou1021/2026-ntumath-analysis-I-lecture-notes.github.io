@@ -169,7 +169,7 @@ where <m>N=(N_1,\ldots, N_n)</m> is the normal vector pointing outward.
 Hence, <m>\frac{\pr 1_\Omega}{\pr x_j}=N_j\,dS</m>.</p>
 <p>Distribution theory is the foundation of modern analysis, including but not limited to functional analysis, harmonic analysis, and partial differential equations (PDE).
 A common theme in the research of PDE is to find the distributional solutions to an equation first and then study the smoothness (regularity) of such solutions.</p>
-<aside>
+<paragraphs>
 <title>Supplement</title>
 <p>The existence of distributional solutions to the Navier-Stokes equation has been known since the work of Jean Leray in 1934.
 (During World War II, while imprisoned, Leray also made significant contributions to algebraic topology and homological algebra.)
@@ -177,7 +177,7 @@ However, the question of whether theses solutions remain smooth has persisted fo
 Just a few days ago, some claimed to have solved the Navier-Stokes problem, constructing a solution that is smooth only for finite time.
 The validity of such counterexample, however, still requires careful examination.
 (The editor is not an expert in this. Please do some fact check yourself.)</p>
-</aside>
+</paragraphs>
 <p>上課事項：
 <ol marker="(i)">
 <li>
@@ -494,13 +494,13 @@ Define
         \liminf_{k\to+\infty} A_k \coloneqq \bigcup_{j=1}^{+\infty}\bigcap_{k=j}^{+\infty}A_k.</md></p>
 </statement>
 </definition>
-<aside>
+<paragraphs>
 <title>Supplement</title>
 <p>Notice that for any sequence <m>x_k</m> of real numbers, we have
 <md>\limsup_{k\to +\infty} \,(-\infty, x_k) = \left(-\infty,\limsup_{k\to+\infty}x_k\right), \quad
         \liminf_{k\to +\infty} \,(-\infty, x_k) = \left(-\infty,\liminf_{k\to+\infty}x_k\right).</md>
 In view of this, we may regard every real number <m>x</m> as the subset <m>(-\infty, x)</m> of <m>\R</m> and this explains the notations.</p>
-</aside>
+</paragraphs>
 <corollary xml:id="cor-limsup-measurable">
 <statement>
 <p>If <m>\set{E_k}_{k=1}^{+\infty}</m> is a set of measurable sets, then <m>\limsup_{k\to+\infty} E_k</m> and <m>\liminf_{k\to+\infty} E_k</m> are measurable.</p>
@@ -517,11 +517,11 @@ We say that <m>H</m> is a <em><m>F_\sigma</m> set</em> if
 where <m>F_k</m> are closed sets.</p>
 </statement>
 </definition>
-<aside>
+<paragraphs>
 <title>Supplement</title>
 <p>The notation <m>G_\delta</m> originated from the German words <em>Gebiet</em> (open set) and <em>Durchschnitt</em> (intersection); amusingly, <m>F_\sigma</m> orginated from the French words <em>fermé</em> (closed) and <em>somme</em> (union).
 Nouns in German are capitalized.</p>
-</aside>
+</paragraphs>
 <corollary xml:id="cor-gdelta-fsigma-measurable">
 <statement>
 <p>All <m>G_\delta</m> sets and <m>F_\sigma</m> sets are measurable.</p>
@@ -682,13 +682,13 @@ With <m>H=\bigcup_kH_k\supset E</m>, the set <m>H\setminus E=\bigcup_k(H_k\setmi
 </proof>
 </theorem>
 <p>As an ending to this chapter, we are going to show that there exists a nonmeasurable set.</p>
-<aside>
+<paragraphs>
 <title>Supplement</title>
 <p>Let <m>\set{A_\alpha}_{\alpha\in I}</m> be an indexed family of nonempty disjoint sets, where <m>I</m> is an index set.
 <em>Axiom of Choice</em> (AC) says that there exists a <em>choice function</em>
 <md>f \colon I\to \bigcup_{\alpha\in I}A_\alpha</md>
 such that <m>f(\alpha)\in A_\alpha</m> for all <m>\alpha\in I</m>.</p>
-</aside>
+</paragraphs>
 <theorem xml:id="thm-vitali">
 <title>Vitali</title>
 <statement>
@@ -1123,14 +1123,14 @@ Every bounded set meets only finitely many <m>F_k</m>, so <m>F=\bigcup_kF_k</m> 
 Each <m>\set{x\in F_k\mid f(x)&gt;a}</m> is relatively open in the closed set <m>F_k</m>, hence measurable, and <m>Z=E\setminus\bigcup_kF_k</m> has measure zero.
 So <m>\set{f&gt;a}=\bigcup_k\set{x\in F_k\mid f(x)&gt;a}\cup(\set{f&gt;a}\cap Z)</m> is measurable.</p>
 </proof>
-<aside>
+<paragraphs>
 <title>Supplement</title>
 <p>Littlewood's three principles of real analysis:</p>
 <blockquote>
 <p>There are three principles, roughly expressible in the following terms: Every (measurable) set is nearly a finite sum of intervals; every function (of class <m>L^p</m>) is nearly continuous; every convergent sequence of functions is nearly uniformly convergent.</p>
 </blockquote>
 <p>The second principle is based on Lusin's theorem (Theorem <xref ref="thm-lusin" text="global"/>), and the third is based on Egorov's theorem (Theorem <xref ref="thm-egorov" text="global"/>).</p>
-</aside>
+</paragraphs>
 </subsection>
 </section>
 <section xml:id="sec-integrals">
@@ -2560,7 +2560,7 @@ For <m>\operatorname{supp}\phi\subset K</m> we have <m>\phi=\sum_{j\in J}\varphi
         \le\#J\cdot C\cdot\#\set{\alpha\mid\abs\alpha\le k}\cdot2^kA\sum_{\abs\gamma\le k}\sup\abs{\pr^\gamma\phi}.</md></p>
 </proof>
 </theorem>
-<aside>
+<paragraphs>
 <title>Supplement</title>
 <p>Theorem <xref ref="thm-localization" text="global"/> and Theorem <xref ref="thm-glueing" text="global"/> say that the presheaf of distributions is a sheaf.
 Recall the definitions.
@@ -2577,7 +2577,7 @@ It is a <em>sheaf</em> if for every open set <m>U</m> and every open cover <m>U=
 The assignment <m>U\mapsto\mathcal D'(U)</m> for open sets <m>U\subset\R^n</m>, with the restriction maps <m>u\mapsto u|_V</m> above, is a presheaf.
 Locality is Theorem <xref ref="thm-localization" text="global"/> (applied to the open set <m>U</m>) and glueing is Theorem <xref ref="thm-glueing" text="global"/>.
 The same is true for <m>U\mapsto C^\infty(U)</m> and <m>U\mapsto L^1_\mathrm{loc}(U)</m> (identified with <m>T_f</m>, up to almost everywhere equality), and the embedding <m>f\mapsto T_f</m> is compatible with restrictions.</p>
-</aside>
+</paragraphs>
 <definition xml:id="def-distribution-convolution">
 <statement>
 <p>Let <m>u\in\mathcal D'(\R^n)</m> and let <m>v\in C_c^\infty(\R^n)</m>.
