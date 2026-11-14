@@ -19,7 +19,7 @@ Lecture notes for 臺大數學系「分析一」(蕭欽玉 教授, 2026 Fall), w
 
 ## Updating the notes
 
-Edit `source/main.ptx` and push to `main`.
+Edit `tex/analysis-i.tex`, regenerate `source/main.ptx` (below), commit both and push to `main`.
 GitHub Actions rebuilds the website and the PDF and publishes them in a few minutes (see the **Actions** tab).
 
 ## Regenerating the PreTeXt from LaTeX
